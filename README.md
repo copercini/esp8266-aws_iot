@@ -32,9 +32,9 @@ Some sketch examples are available in examples folder of this git.
 ## Why it doesn't work yet?
 The heap consumption during TLS handshake is too high, forcing watchdog timer to reboot the device. 
 
-After boot, login in wifi network and load MQTT functions, ESP8266 has about ~30k fo free heap.
-After load the certificate, private key and CA certificate via SPIFFS filesystem , ESP8266 has about ~19k fo free heap.
-And during TLS handshake, the heap is gone:
+*After boot, login in wifi network and load MQTT functions, ESP8266 has about ~30k fo free heap.
+*After load the certificate, private key and CA certificate via SPIFFS filesystem , ESP8266 has about ~19k fo free heap.
+*And during TLS handshake, the heap is gone:
 
 State: receiving Server Hello (2)
 State: receiving Certificate (11)
