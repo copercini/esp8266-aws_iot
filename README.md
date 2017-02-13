@@ -1,4 +1,6 @@
 ## Working example for ESP32: https://github.com/copercini/esp32-iot-examples/
+--------------------------------------------------------------------------------------------
+
 
 # Some examples using x.509 certificates and TLSv1.2 under Arduino IDE to communicate with AWS iot
 
