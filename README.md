@@ -1,3 +1,5 @@
+## Working example for ESP32: https://github.com/copercini/esp32-iot-examples/
+
 # Some examples using x.509 certificates and TLSv1.2 under Arduino IDE to communicate with AWS iot
 
 After AxTLS update to v2.0.0, the ESP8266 can work with TLS v1.2, the major restriction for this small device communicates with AWS iot natively. You can follow the port here: https://github.com/igrr/axtls-8266
