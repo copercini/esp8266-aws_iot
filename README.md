@@ -10,19 +10,12 @@ Due heap limitation, the ESP8266 is rebooting before complete handshake, I am ho
 
 ## How I can get TLS v1.2 working in my ESP8266 with arduino IDE?
 
-#### First: Fix WiFiSecureClient.cc
-There is a bug in WiFiSecureClient which doesn't load the certificates before call WiFiClientSecure::connect, it caused because a new SSLContext is created just in this function and not in loadCertificate, loadPrivateKey or loadCACert functions.
-
-My poor fix to this is in WiFiSecureClient folder of this git.
-It need to be replaced in Arduino\hardware\esp8266com\esp8266\libraries\ESP8266WiFi\src <br />
-of your Arduino git installation (https://github.com/esp8266/Arduino#using-git-version)
-
-#### Second: Update libaxtls.a to last version (b20140f)
+#### First: Update libaxtls.a to last version (b20140f)
 You can compile it as you own: add xtensa toolchain to your path, and run make. <br />
 Or download a compiled one in the folder axtls of this git and replace it on Arduino\hardware\esp8266com\esp8266\tools\sdk\lib of your Arduino git installation (https://github.com/esp8266/Arduino#using-git-version)
 
 
-#### Third: Creating a thing, Downloading and converting AWS iot certificates to DER format
+#### Second: Creating a thing, Downloading and converting AWS iot certificates to DER format
 http://docs.aws.amazon.com/iot/latest/developerguide/create-device-certificate.html
 
 Converting PEM to DER format: <br />
@@ -32,7 +25,7 @@ $ openssl x509 -in aaaaaaaaa-certificate.pem.crt -out certificates/cert.der -out
 $ openssl rsa -in aaaaaaaaaa-private.pem.key -out certificates/private.der -outform DER <br />
 
 
-#### Fourth: Uploading a arduino sketch
+#### Third: Uploading a arduino sketch
 Some sketch examples are available in examples folder of this git.
 
 
