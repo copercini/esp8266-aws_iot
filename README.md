@@ -30,20 +30,18 @@ Some sketch examples are available in examples folder of this git.
 
 
 ## Why it doesn't work yet?
-The heap consumption during TLS handshake is too high, forcing watchdog timer to reboot the device. 
-
-- After boot, login in wifi network and load MQTT functions, ESP8266 has about ~30k fo free heap.
-- After load the certificate, private key and CA certificate via SPIFFS filesystem , ESP8266 has about ~19k fo free heap.
-- And during TLS handshake, the heap is gone:
+Because AxTLS doens't support the AWS ioT required cipher suites.
 
 State: receiving Server Hello (2) <br />
 State: receiving Certificate (11) <br />
 State: receiving Certificate Request (13) <br />
 State: receiving Server Hello Done (14) <br />
 State: sending Certificate (11) <br />
-WDT reset <br />
+State:	sending Client Key Exchange (16)<br />
+State:	sending Finished (16)<br />
+Alert: handshake failure<br />
+Error: SSL error 40<br />
 <br />
+Based on Issue: https://github.com/esp8266/Arduino/issues/2771 <br />
+Means: AxTLS library doesn't support needed cipher suites <br />
 <br />
-Complete handshake reference:
-![TLS handshake](https://zoompf.com/wp-content/uploads/2014/10/handshake.png "TLS handshake")
-
