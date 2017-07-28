@@ -114,6 +114,8 @@ if(espClient.loadPrivateKey(private_key))
 else
   Serial.println("private key not loaded");
 
+  
+/*  
 // Load CA file
 File ca = SPIFFS.open("/ca.der", "r"); //replace ca eith your uploaded file name
   if (!ca) {
@@ -124,7 +126,6 @@ File ca = SPIFFS.open("/ca.der", "r"); //replace ca eith your uploaded file name
   
   delay(1000);
 
-/*
 if(espClient.loadCACert(ca))
   Serial.println("ca loaded");
 else
