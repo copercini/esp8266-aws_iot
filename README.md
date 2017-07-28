@@ -11,9 +11,10 @@ After AxTLS update to v2.0.0, the ESP8266 can work with TLS v1.2, the major rest
 http://docs.aws.amazon.com/iot/latest/developerguide/create-device-certificate.html
 
 Converting PEM to DER format: <br />
-$ openssl x509 -in aaaaaaaaa-certificate.pem.crt.txt -out certificates/cert.der -outform DER <br />
-$ openssl rsa -in aaaaaaaaaa-private.pem.key -out certificates/private.der -outform DER <br />
+$ openssl x509 -in aaaaaaaaa-certificate.pem.crt.txt -out cert.der -outform DER <br />
+$ openssl rsa -in aaaaaaaaaa-private.pem.key -out private.der -outform DER <br />
 
+copy cert.der and private.der to data folder
 
 #### Third: Uploading a arduino sketch
 Some sketch examples are available in examples folder of this git.
