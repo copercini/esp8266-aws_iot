@@ -124,11 +124,12 @@ File ca = SPIFFS.open("/ca.der", "r"); //replace ca eith your uploaded file name
   
   delay(1000);
 
+/*
 if(espClient.loadCACert(ca))
   Serial.println("ca loaded");
 else
   Serial.println("ca failed");
-
+*/
 Serial.print("Heap: "); Serial.println(ESP.getFreeHeap());
 
  // client.setServer(mqtt_server, 8883);
