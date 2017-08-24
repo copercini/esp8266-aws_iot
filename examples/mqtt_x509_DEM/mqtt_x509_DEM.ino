@@ -114,6 +114,8 @@ if(espClient.loadPrivateKey(private_key))
 else
   Serial.println("private key not loaded");
 
+  
+/*  
 // Load CA file
 File ca = SPIFFS.open("/ca.der", "r"); //replace ca eith your uploaded file name
   if (!ca) {
@@ -128,7 +130,7 @@ if(espClient.loadCACert(ca))
   Serial.println("ca loaded");
 else
   Serial.println("ca failed");
-
+*/
 Serial.print("Heap: "); Serial.println(ESP.getFreeHeap());
 
  // client.setServer(mqtt_server, 8883);
