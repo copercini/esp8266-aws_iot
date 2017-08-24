@@ -1,4 +1,8 @@
-//This example needs https://github.com/esp8266/arduino-esp8266fs-plugin
+/* ESP8266 AWS IoT example by Evandro Luis Copercini 
+ * Public Domain - 2017
+ * But you can pay me a beer if we meet someday :D
+ * This example needs https://github.com/esp8266/arduino-esp8266fs-plugin
+*/
 
 #include "FS.h"
 #include <ESP8266WiFi.h>
