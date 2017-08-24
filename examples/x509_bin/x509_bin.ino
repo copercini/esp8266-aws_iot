@@ -1,3 +1,6 @@
+/* ESP8266 AWS IoT example by Evandro Luis Copercini 
+ * Public Domain - 2017
+*/
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
