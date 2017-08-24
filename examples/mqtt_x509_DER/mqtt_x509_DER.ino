@@ -1,7 +1,14 @@
-/* ESP8266 AWS IoT example by Evandro Luis Copercini 
- * Public Domain - 2017
- * But you can pay me a beer if we meet someday :D
- * This example needs https://github.com/esp8266/arduino-esp8266fs-plugin
+/* ESP8266 AWS IoT example by Evandro Luis Copercini
+   Public Domain - 2017
+   But you can pay me a beer if we meet someday :D
+   This example needs https://github.com/esp8266/arduino-esp8266fs-plugin
+
+
+  It connects to AWS IoT server then:
+  - publishes "hello world" to the topic "outTopic" every two seconds
+  - subscribes to the topic "inTopic", printing out any messages
+
+  -WARNING: this example doesn't verify the server CA due low heap, this can be a security issue
 */
 
 #include "FS.h"
@@ -13,7 +20,7 @@
 const char* ssid = "Wifi_ssid";
 const char* password = "Wifi_password";
 
-const char* mqtt_server = "aaaaaaaaaaaaaa.iot.us-west-2.amazonaws.com"; //MQTT broker ip 
+const char* AWS_endpoint = "aaaaaaaaaaaaaa.iot.us-west-2.amazonaws.com"; //MQTT broker ip
 
 
 void callback(char* topic, byte* payload, unsigned int length) {
@@ -27,7 +34,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 }
 WiFiClientSecure espClient;
-PubSubClient client(mqtt_server,8883,callback,espClient); //set  MQTT port number to 8883 as per //standard
+PubSubClient client(AWS_endpoint, 8883, callback, espClient); //set  MQTT port number to 8883 as per //standard
 long lastMsg = 0;
 char msg[50];
 int value = 0;
@@ -59,7 +66,7 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("coisa")) {
+    if (client.connect("ESPthing")) {
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.publish("outTopic", "hello world");
@@ -86,59 +93,56 @@ void setup() {
     return;
   }
 
-Serial.print("Heap: "); Serial.println(ESP.getFreeHeap());
+  Serial.print("Heap: "); Serial.println(ESP.getFreeHeap());
 
-// Load certificate file
-File cert = SPIFFS.open("/cert.der", "r"); //replace cert.crt eith your uploaded file name
+  // Load certificate file
+  File cert = SPIFFS.open("/cert.der", "r"); //replace cert.crt eith your uploaded file name
   if (!cert) {
     Serial.println("Failed to open cert file");
   }
   else
-  Serial.println("Success to open cert file");
-  
-  delay(1000);
-  
-if(espClient.loadCertificate(cert))
-  Serial.println("cert loaded");
-else
-  Serial.println("cert not loaded");
+    Serial.println("Success to open cert file");
 
-// Load private key file
-File private_key = SPIFFS.open("/private.der", "r"); //replace private eith your uploaded file name
+  delay(1000);
+
+  if (espClient.loadCertificate(cert))
+    Serial.println("cert loaded");
+  else
+    Serial.println("cert not loaded");
+
+  // Load private key file
+  File private_key = SPIFFS.open("/private.der", "r"); //replace private eith your uploaded file name
   if (!private_key) {
     Serial.println("Failed to open private cert file");
   }
   else
-  Serial.println("Success to open private cert file");
-  
+    Serial.println("Success to open private cert file");
+
   delay(1000);
 
-if(espClient.loadPrivateKey(private_key))
-  Serial.println("private key loaded");
-else
-  Serial.println("private key not loaded");
-
-  
-/*  
-// Load CA file
-File ca = SPIFFS.open("/ca.der", "r"); //replace ca eith your uploaded file name
-  if (!ca) {
-    Serial.println("Failed to open ca ");
-  }
+  if (espClient.loadPrivateKey(private_key))
+    Serial.println("private key loaded");
   else
-  Serial.println("Success to open ca");
-  
-  delay(1000);
+    Serial.println("private key not loaded");
 
-if(espClient.loadCACert(ca))
-  Serial.println("ca loaded");
-else
-  Serial.println("ca failed");
-*/
-Serial.print("Heap: "); Serial.println(ESP.getFreeHeap());
 
- // client.setServer(mqtt_server, 8883);
- // client.setCallback(callback);
+  /*
+    // Load CA file
+    File ca = SPIFFS.open("/ca.der", "r"); //replace ca eith your uploaded file name
+    if (!ca) {
+      Serial.println("Failed to open ca ");
+    }
+    else
+    Serial.println("Success to open ca");
+
+    delay(1000);
+
+    if(espClient.loadCACert(ca))
+    Serial.println("ca loaded");
+    else
+    Serial.println("ca failed");
+  */
+  Serial.print("Heap: "); Serial.println(ESP.getFreeHeap());
 }
 
 
@@ -158,5 +162,6 @@ void loop() {
     Serial.print("Publish message: ");
     Serial.println(msg);
     client.publish("outTopic", msg);
+    Serial.print("Heap: "); Serial.println(ESP.getFreeHeap()); //Low heap can cause problems
   }
 }
