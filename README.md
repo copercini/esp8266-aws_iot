@@ -1,9 +1,9 @@
-## Some examples using x.509 certificates and TLSv1.2 under Arduino IDE to communicate with AWS iot
+## Some examples using x.509 certificates and TLSv1.2 under Arduino IDE to communicate with AWS IoT
 
 After AxTLS update to v2.0.0, the ESP8266 can work with TLS v1.2, the major restriction for this small device communicates with AWS iot natively.
 
 
-### How I can get AWS IoT working in my ESP8266 with arduino IDE?
+### How can I get AWS IoT working in my ESP8266 with arduino IDE?
 
 #### First: Update ESP8266 Arduino core to last git version, [Here are the instructions](https://github.com/esp8266/Arduino#using-git-version)
 
