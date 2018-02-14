@@ -8,7 +8,7 @@
   -WARNING: this example doesn't verify the server CA due low heap, this can be a security issue
 */
 #include <ESP8266WiFi.h>
-#include <PubSubClient.h>
+#include <PubSubClient.h> //Get it from here: https://github.com/knolleary/pubsubclient
 
 /* convert and replace with your keys
   $ openssl x509 -in aaaaaaaaa-certificate.pem.crt -out certificates/cert.der -outform DER
