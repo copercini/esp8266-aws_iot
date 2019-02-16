@@ -14,11 +14,16 @@
 #include "FS.h"
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
 
 // Update these with values suitable for your network.
 
 const char* ssid = "Wifi_ssid";
 const char* password = "Wifi_password";
+
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "pool.ntp.org");
 
 const char* AWS_endpoint = "aaaaaaaaaaaaaa.iot.us-west-2.amazonaws.com"; //MQTT broker ip
 
@@ -43,6 +48,7 @@ void setup_wifi() {
 
   delay(10);
   // We start by connecting to a WiFi network
+  espClient.setBufferSizes(512, 512);
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(ssid);
@@ -58,6 +64,14 @@ void setup_wifi() {
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
+
+  timeClient.begin();
+  while(!timeClient.update()){
+    timeClient.forceUpdate();
+  }
+
+  espClient.setX509Time(timeClient.getEpochTime());
+
 }
 
 
@@ -76,6 +90,12 @@ void reconnect() {
       Serial.print("failed, rc=");
       Serial.print(client.state());
       Serial.println(" try again in 5 seconds");
+
+      char buf[256];
+      espClient.getLastSSLError(buf,256);
+      Serial.print("WiFiClientSecure SSL error: ");
+      Serial.println(buf);
+
       // Wait 5 seconds before retrying
       delay(5000);
     }
@@ -126,7 +146,7 @@ void setup() {
     Serial.println("private key not loaded");
 
 
-  /*
+
     // Load CA file
     File ca = SPIFFS.open("/ca.der", "r"); //replace ca eith your uploaded file name
     if (!ca) {
@@ -141,7 +161,7 @@ void setup() {
     Serial.println("ca loaded");
     else
     Serial.println("ca failed");
-  */
+
   Serial.print("Heap: "); Serial.println(ESP.getFreeHeap());
 }
 
