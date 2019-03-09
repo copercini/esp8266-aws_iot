@@ -3,12 +3,9 @@
    But you can pay me a beer if we meet someday :D
    This example needs https://github.com/esp8266/arduino-esp8266fs-plugin
 
-
   It connects to AWS IoT server then:
   - publishes "hello world" to the topic "outTopic" every two seconds
   - subscribes to the topic "inTopic", printing out any messages
-
-  -WARNING: this example doesn't verify the server CA due low heap, this can be a security issue
 */
 
 #include "FS.h"
